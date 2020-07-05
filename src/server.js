@@ -3,7 +3,7 @@ const grapqlHTTP = require("express-graphql");
 const { buildSchema } = require("graphql");
 const app = express();
 
-const object = [
+const users = [
     {name:"juliano",last_name:"Santos"},
     {name:"andre",last_name:"sant'anna"},
     {name:"murilo",last_name:"Santos"},
@@ -11,9 +11,16 @@ const object = [
 ];
 
 const schema = buildSchema(`
-    type Query {hello : String}
+    type Query {
+        hello : String
+        user: [UserInterface]
+    }
+    type UserInterface {
+        name: String
+        last_name: String
+    }
 `);
-const root = {hello : ()=>'Hello World!'};
+const root = {hello : ()=>'Hello World!', user : () => users};
 
 
 app.use("/",grapqlHTTP({
